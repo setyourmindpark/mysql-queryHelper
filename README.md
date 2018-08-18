@@ -10,7 +10,7 @@
 - camelcase
 - bluebird
 
-## INSTALL
+### INSTALL
 set config in your package.json
 ``` 
 ...
