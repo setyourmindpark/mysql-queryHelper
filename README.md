@@ -1,16 +1,16 @@
-## mysql-queryHelper
-### features
+## MYSQL-QUERYHELPER
+### FEATURES
 - support query results what you want ( *see example* )
 - handle chunk of transactions at once ( *see example* )
 - you can generate multiple modules ( support multi connections ) 
 
-### dependencies
+### DEPENDENCIES
 - mysql2
 - lodash
 - camelcase
 - bluebird
 
-## install
+## INSTALL
 set config in your package.json
 ``` 
 ...
@@ -22,7 +22,7 @@ set config in your package.json
 ...
 ```
 
-### example
+### EXAMPLE
 ``` javascript
 import mysqlQueryHelper from 'mysql-queryHelper';
 
