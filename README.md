@@ -1,8 +1,8 @@
 ## MYSQL-QUERYHELPER
 ### FEATURES
-- support query results what you want ( *see example* )
-- handle chunk of transactions at once ( *see example* )
-- you can generate multiple modules ( support multi connections ) 
+- support query results what you want by using **expect** and **camelcase** options
+- handle chunk of transactions at once ( no need to know connection releases )
+- you can use multiple modules ( support multi connections ) 
 
 ### DEPENDENCIES
 - mysql2
@@ -26,14 +26,16 @@ set config in your package.json
 ``` javascript
 import mysqlQueryHelper from 'mysql-queryHelper';
 
-const queryHelper = mysqlQueryHelper.createModule({ host: 'localhost', port: '3306', user: 'user', database: 'database', password: 'password', connectionLimit: 10 });
+const queryHelper1 = mysqlQueryHelper.createModule({ host: 'host1', port: 'port', user: 'user', database: 'database', password: 'password', connectionLimit: 10 });
+const queryHelper2 = mysqlQueryHelper.createModule({ host: 'host2', port: 'port', user: 'user', database: 'database', password: 'password', connectionLimit: 10 });
 
 (async () => {
-    const select = await queryHelper.execute({ query: 'SELECT NOW() AS ? FROM DUAL', params: ['NOW'], expect: 'single', camelCase: true });
+    const select = await queryHelper1.execute({ query: 'SELECT NOW() AS ? FROM DUAL', params: ['NOW'], expect: 'single', camelCase: true });
     // { now: 2018-08-18T07:47:37.000Z }
-    const transaction = await queryHelper.transaction([
+    const transaction = await queryHelper1.transaction([
         { query: 'INSERT INTO SAMPLE VALUES(NULL, ?,?,?,?,?)', params: ['A', 'A', 'A', 'A', 'A'] },
-        { query: 'INSERT INTO SAMPLE VALUES(NULL, "A","B","C","D","E")' }
+        { query: 'INSERT INTO SAMPLE VALUES(NULL, "A","B","C","D","E")' },
+        // ...
     ])
     // [ ResultSetHeader {
     //     fieldCount: 0,
@@ -49,6 +51,10 @@ const queryHelper = mysqlQueryHelper.createModule({ host: 'localhost', port: '33
     //     info: '',
     //     serverStatus: 3,
     //     warningStatus: 0 } ]
+
+    // you can switch your other db
+    queryHelper2.execute({ ... })
+    queryHelper2.transaction({ ... })
 })()
 ```
 - **query** : required 
