@@ -13,10 +13,10 @@
   "author": "jaehunpark",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.5.1",
     "camelcase": "^5.0.0",
     "lodash": "^4.17.10",
-    "mysql2": "^1.6.1"
+    "mysql2": "^1.6.1",
+    "q": "^1.5.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -1,7 +1,7 @@
 import mysql2 from 'mysql2/promise';
-import Promise from 'bluebird';
 import camelcase from 'camelcase';
 import _ from 'lodash';
+import q from 'q';
 
 function createModule({ host, port, user, database, password, connectionLimit }) {
     const pool = mysql2.createPool({ host, port, user, database, password, connectionLimit });    
@@ -38,9 +38,7 @@ function createModule({ host, port, user, database, password, connectionLimit })
             const conn = await getConnection();
             try {
                 await conn.beginTransaction();
-                const rows = await Promise.mapSeries( resources, ( resource, index, length ) => {
-                    return doQuery({ conn, query: resource.query, params: resource.params } )
-                });
+                const rows = await q.all( _.map( resources, resource => doQuery({ conn, query: resource.query, params: resource.params })));                
                 await conn.commit();
                 conn.release();
                 return rows;

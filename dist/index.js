@@ -10,10 +10,6 @@ var _promise = require('mysql2/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _bluebird = require('bluebird');
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
-
 var _camelcase = require('camelcase');
 
 var _camelcase2 = _interopRequireDefault(_camelcase);
@@ -21,6 +17,10 @@ var _camelcase2 = _interopRequireDefault(_camelcase);
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
+
+var _q = require('q');
+
+var _q2 = _interopRequireDefault(_q);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -89,9 +89,9 @@ function createModule(_ref) {
             var conn = await getConnection();
             try {
                 await conn.beginTransaction();
-                var rows = await _bluebird2.default.mapSeries(resources, function (resource, index, length) {
+                var rows = await _q2.default.all(_lodash2.default.map(resources, function (resource) {
                     return doQuery({ conn: conn, query: resource.query, params: resource.params });
-                });
+                }));
                 await conn.commit();
                 conn.release();
                 return rows;
