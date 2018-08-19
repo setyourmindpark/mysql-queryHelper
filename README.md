@@ -8,7 +8,7 @@
 - mysql2
 - lodash
 - camelcase
-- bluebird
+- q
 
 ### INSTALL
 set config in your package.json
