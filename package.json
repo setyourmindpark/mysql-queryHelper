@@ -1,5 +1,5 @@
 {
-  "name": "mysql-queryHelper",
+  "name": "mysql-queryhelper",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",

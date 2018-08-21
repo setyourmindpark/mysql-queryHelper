@@ -16,7 +16,7 @@ set config in your package.json
 ...
 "dependencies": {
     ...
-    "mysql-queryHelper": "git+https://github.com/setyourmindpark/mysql-queryHelper.git"
+    "mysql-queryHelper": "git+https://github.com/setyourmindpark/mysql-queryhelper.git"
     ...
   }
 ...
@@ -24,7 +24,7 @@ set config in your package.json
 
 ### EXAMPLE
 ``` javascript
-import mysqlQueryHelper from 'mysql-queryHelper';
+import mysqlQueryHelper from 'mysql-queryhelper';
 
 const queryHelper1 = mysqlQueryHelper.createModule({ host: 'host1', port: 'port', user: 'user', database: 'database', password: 'password', connectionLimit: 10 });
 const queryHelper2 = mysqlQueryHelper.createModule({ host: 'host2', port: 'port', user: 'user', database: 'database', password: 'password', connectionLimit: 10 });
