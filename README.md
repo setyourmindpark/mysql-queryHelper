@@ -26,10 +26,10 @@ set config in your package.json
 ``` javascript
 import mysqlQueryHelper from 'mysql-queryhelper';
 
-const queryHelper1 = mysqlQueryHelper.createModule({ host: 'host1', port: 'port', user: 'user', database: 'database', password: 'password', connectionLimit: 10 });
-const queryHelper2 = mysqlQueryHelper.createModule({ host: 'host2', port: 'port', user: 'user', database: 'database', password: 'password', connectionLimit: 10 });
-
 (async () => {
+    // you can config string ( connection string ) or json. see https://www.npmjs.com/package/mysql2
+    const queryHelper1 = await queryModule.createModule('mysql://user:password@host:port/database');
+    const queryHelper2 = await queryModule.createModule('mysql://user:password@host2:port/database');    
     const select = await queryHelper1.execute({ query: 'SELECT NOW() AS ? FROM DUAL', params: ['NOW'], expect: 'single', camelCase: true });
     // { now: 2018-08-18T07:47:37.000Z }
     const transaction = await queryHelper1.transaction([
