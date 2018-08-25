@@ -24,28 +24,21 @@ var _q2 = _interopRequireDefault(_q);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function createModule(_ref) {
-    var host = _ref.host,
-        port = _ref.port,
-        user = _ref.user,
-        database = _ref.database,
-        password = _ref.password,
-        connectionLimit = _ref.connectionLimit;
-
-    var pool = _promise2.default.createPool({ host: host, port: port, user: user, database: database, password: password, connectionLimit: connectionLimit });
+async function createModule(config) {
+    var pool = _promise2.default.createPool(config); // json or string ( connection string ) 
     async function getConnection() {
         return await pool.getConnection();
     };
-    async function doQuery(_ref2) {
-        var conn = _ref2.conn,
-            query = _ref2.query,
-            params = _ref2.params,
-            expect = _ref2.expect;
+    async function doQuery(_ref) {
+        var conn = _ref.conn,
+            query = _ref.query,
+            params = _ref.params,
+            expect = _ref.expect;
 
-        var _ref3 = await conn.query(query, params),
-            _ref4 = _slicedToArray(_ref3, 2),
-            rows = _ref4[0],
-            fields = _ref4[1];
+        var _ref2 = await conn.query(query, params),
+            _ref3 = _slicedToArray(_ref2, 2),
+            rows = _ref3[0],
+            fields = _ref3[1];
 
         if (_lodash2.default.isEmpty(fields)) {
             // insert or update
@@ -55,15 +48,15 @@ function createModule(_ref) {
         }
     }
     var queryModule = {
-        execute: async function execute(_ref5) {
-            var _ref5$query = _ref5.query,
-                query = _ref5$query === undefined ? '' : _ref5$query,
-                _ref5$params = _ref5.params,
-                params = _ref5$params === undefined ? [] : _ref5$params,
-                _ref5$expect = _ref5.expect,
-                expect = _ref5$expect === undefined ? 'many' : _ref5$expect,
-                _ref5$camelCase = _ref5.camelCase,
-                camelCase = _ref5$camelCase === undefined ? true : _ref5$camelCase;
+        execute: async function execute(_ref4) {
+            var _ref4$query = _ref4.query,
+                query = _ref4$query === undefined ? '' : _ref4$query,
+                _ref4$params = _ref4.params,
+                params = _ref4$params === undefined ? [] : _ref4$params,
+                _ref4$expect = _ref4.expect,
+                expect = _ref4$expect === undefined ? 'many' : _ref4$expect,
+                _ref4$camelCase = _ref4.camelCase,
+                camelCase = _ref4$camelCase === undefined ? true : _ref4$camelCase;
 
             var conn = await getConnection();
             try {
@@ -102,6 +95,7 @@ function createModule(_ref) {
             }
         }
     };
+    await queryModule.execute({ query: 'SELECT NOW() AS NOW FROM DUAL' }); // check connection    
     return queryModule;
 };
 

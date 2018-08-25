@@ -3,8 +3,8 @@ import camelcase from 'camelcase';
 import _ from 'lodash';
 import q from 'q';
 
-function createModule({ host, port, user, database, password, connectionLimit }) {
-    const pool = mysql2.createPool({ host, port, user, database, password, connectionLimit });    
+async function createModule( config ) {    
+    const pool = mysql2.createPool( config ); // json or string ( connection string ) 
     async function getConnection() {
         return await pool.getConnection();
     };
@@ -49,6 +49,7 @@ function createModule({ host, port, user, database, password, connectionLimit })
             }
         }
     }
+    await queryModule.execute({ query: 'SELECT NOW() AS NOW FROM DUAL' });  // check connection    
     return queryModule;
 };
 
